@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+</head>
+<body id="body">
+<div id="calcBody">
+    <table class="calculator">
+        <tr>
+            <td colspan="5"><input id="display" name="display" value="0" size="28" maxlength="25"></td>
+        </tr>
+        <tr>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(7)" value="7"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(8)" value="8"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(9)" value="9"></td>
+            <td><input type="button" class="btn btn-default btn-danger" name="btnMath" onclick="sendRequestGET('clear')" value="AC"></td>
+            <td><input type="button" class="btn btn-default btn-danger" name="btnMath" onclick="sendRequestGET('undo')" value="C"></td>
+        <tr>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(4)" value="4"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(5)" value="5"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(6)" value="6"></td>
+            <td><input type="button" class="btn btn-default btn-primary" name="btnMath" value="+"></td>
+            <td><input type="button" class="btn btn-default btn-primary" name="btnMath" value="-"></td>
+        </tr>
+        <tr>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(1)" value="1"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(2)" value="2"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(3)" value="3"></td>
+            <td><input type="button" class="btn btn-default btn-primary" name="btnMath" value="x"></td>
+            <td><input type="button" class="btn btn-default btn-primary" name="btnMath" value="/"></td>
+        </tr>
+        <tr>
+            <td><input type="button" class="btn btn-default btn-primary" name="btnMath" value="+/-"></td>
+            <td><input type="button" class="btn btn-default" name="btnNum" onclick="sendNumber(0)" value="0"></td>
+            <td><input type="button" class="btn btn-default btn-primary" name="btnMath" onclick="sendNumber('.')" value="."></td>
+            <td id="resultSign" colspan="2"><input type="button" class="btn btn-default btn-primary btn-block" name="btnMath" value="="></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+
+<style>
+    * {
+      padding: 0;
+      margin: 5px;
+      text-align: center;
+    }
+    .calculator {
+      width: 270px;
+      height: 320px;
+      background-color: #c7cdd1;
+      box-shadow: 0px 0px 0px 4px #666;
+      border: 3px solid black;
+      border-radius: 4px;
+      margin: 50px;
+    }
+    .tr {
+      margin: 30px;
+    }
+    #display {
+      width: 220px;
+      height: 40px;
+      text-align: right;
+      background-color: black;
+      border: 3px solid white;
+      font-size: 18px;
+      left: 2px;
+      top: 2px;
+      color: #7fff00;
+    }
+    #resultSign {
+      padding: 0px 15px 0px 15px;
+    }
+</style>
+
+<script type="text/javascript">
+    var http = new XMLHttpRequest();
+
+  function sendRequestGET(path = '', query = '') {
+    console.log('path and query: ' + path + query);
+    http.open('GET', path + '?' + query);
+    http.send();
+  }
+
+  http.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById('display').value = this.responseText;
+    }
+  }
+
+  function sendNumber(value = '') {
+      // let currency = document.getElementById('currency').value;
+      sendRequestGET('number', 'val=' + value);
+  }
+</script>
