@@ -1,5 +1,3 @@
-package main.java;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +52,26 @@ public class Memory {
     }
 
     public String toString() {
-        String str = "\n";
+        return "<tr>\n" +
+                "                    <td onclick=\"openUp(0)\">it works</td>\n" +
+                "                    <td onclick=\"openUp(1)\"></td>\n" +
+                "                    <td onclick=\"openUp(2)\"></td>\n" +
+                "                </tr>\n" +
+                "                <tr>\n" +
+                "                    <td onclick=\"openUp(3)\"></td>\n" +
+                "                    <td onclick=\"openUp(4)\"></td>\n" +
+                "                    <td onclick=\"openUp(5)\"></td>\n" +
+                "                </tr>\n" +
+                "                <tr>\n" +
+                "                    <td onclick=\"openUp(6)\"></td>\n" +
+                "                    <td onclick=\"openUp(7)\"></td>\n" +
+                "                    <td onclick=\"openUp(8)\"></td>\n" +
+                "                </tr>";
+
+
+
+
+        /*String str = "\n";
         for(int i = 0; i < cards.length; i++) {
             if(openedNumbers.contains(cards[i]))
                 str += " - " + cards[i];
@@ -63,6 +80,6 @@ public class Memory {
             if((i + 1) % 3 == 0)
                 str += "\n";
         }
-        return str;
+        return str;*/
     }
 }

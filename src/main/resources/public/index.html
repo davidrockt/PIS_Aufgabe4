@@ -6,6 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -15,140 +16,66 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <style>
-        #frame {
-            text-align: center;
-            align-content: center;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        h1, h2 {
-            text-align: center;
-        }
-
-        #overlayWithBtnAct {
-            align-items: center;
-            align-content: center;
-            display: none;
-            width: 60%;
-            height: 60%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 2;
-            cursor: pointer;
-        }
-
-
-    </style>
 </head>
 <body>
 <div class="container">
     <header>
         <h1>Memory Game</h1>
     </header>
-    <div id="frame">
-        <div id="info">
-            <h2>Show your Skills!</h2>
-            <section class="score-panel">
-                <ul class="stars">
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                </ul>
-
-                <span class="moves">0</span> Move(s)
-
-                <div class="timer">
-                </div>
-
-                <div class="restart" onclick=startGame()>
-                    <i class="fa fa-repeat">
-                        <button onclick="showOn()">Neues Spiel</button>
-                    </i>
-                </div>
-            </section>
+    <h2>Show your Skills!</h2>
+    <div class="container">
+        <div class="info">
 
             <table class="table table-bordered table-dark" id='board'>
 
                 <tr>
-                    <td onclick="sendRequestGET()"></td>
-                    <td onclick="sendRequestGET()"></td>
-                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="openUp(0)"></td>
+                    <td onclick="openUp(1)"></td>
+                    <td onclick="openUp(2)"></td>
                 </tr>
                 <tr>
-                    <td onclick="sendRequestGET()"></td>
-                    <td onclick="sendRequestGET()"></td>
-                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="openUp(3)"></td>
+                    <td onclick="openUp(4)"></td>
+                    <td onclick="openUp(5)"></td>
                 </tr>
                 <tr>
-                    <td onclick="sendRequestGET()"></td>
-                    <td onclick="sendRequestGET()"></td>
-                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="openUp(6)"></td>
+                    <td onclick="openUp(7)"></td>
+                    <td onclick="openUp(8)"></td>
                 </tr>
-
             </table>
+
+                <section class="score-panel">
+                <div id="score-panel">
+                    <div class="leftdiv">
+                        <ul class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span class="moves">0</span> Moves
+                    </div>
+                    <div class="timers">
+                        <article class="timer">
+                            <h3 class="info">Time: <span class="clock data">0:00</span></h3>
+                        </article>
+                        <div class="restart">
+                            <i class="fa fa-repeat"></i>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </section>
+
+
 
 
             <button onclick="showOn()">Highscore</button>
 
 
-        </div>
-        <div id="overlayWithBtnAct">
-            <div id="overlayNewGame">
-                <h2>Schwierigkeitsgrad wählen:</h2>
-                <button onclick="">Leicht</button>
-                <button onclick="">Mittel</button>
-                <button onclick="">Schwer</button>
-                <button onclick="showOff()">zurück zum Spiel</button>
-            </div>
-            <div id="overlayHigh">
-                <table>
-                    <tr>
-                        <thead>
-                        <th><h1>Highscore Rangliste</h1></th>
-                        </thead>
-                    </tr>
-                    <tr>
-                        <thead>
-                        <th><h2>Name</h2></th>
-                        <th><h2>Anzahl der benötigten Züge</h2></th>
-                        <th><h2>Zeit (mm:ss)</h2></th>
-                        </thead>
-                    </tr>
-                    <tr>
-                        <td>User One</td>
-                        <td>10</td>
-                        <td>1:00</td>
-                    </tr>
-                    <tr>
-                        <td>User Two</td>
-                        <td>12</td>
-                        <td>2:00</td>
-                    </tr>
-                    <tr>
-                        <td>User Two</td>
-                        <td>15</td>
-                        <td>3:00</td>
-                    </tr>
-                </table>
-                <button onclick="showOff()">zurück zum Spiel</button>
-            </div>
-        </div>
-        <div id="popupWin" class="overlay">
-            <div class="popup">
-                <h2>Glückwunsch 🎉</h2>
-                <a class="close" href=#>×</a>
-                <div class="content-1">
-                    Herzlichen Glückwunsch! Du hast Gewonnen!
-                </div>
-                <div class="content-2">
-                    <p>Du hast <span id=finalMove> </span> Spielzüge benötigt </p>
-                    <p>Deine Zeit: <span id=totalTime> </span></p>
-                    <p>Bewertung: <span id=starRating></span></p>
-                </div>
-                <button id="play-again" onclick=sendRequestGET('newGame')>
-                    erneut spielen 😄</a>
-                </button>
-            </div>
-        </div>
+
     </div>
 </div>
 
@@ -162,12 +89,22 @@
         http.send();
     }
 
+    http.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById('board').innerHTML = this.responseText;
+    }
+  }
+
     function showOn() {
         document.getElementById("overlayWithBtnAct").style.display = "block";
     }
 
     function showOff() {
         document.getElementById("overlayWithBtnAct").style.display = "none";
+    }
+
+    function openUp(idx) {
+        sendRequestGET('card', 'idx=' + idx);
     }
 
 </script>
