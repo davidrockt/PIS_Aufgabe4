@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>MemoryGame</title>
@@ -36,54 +36,132 @@
             cursor: pointer;
         }
 
-        #overlayWin {
-            align-content: center;
-            display: none;
-            width: 60%;
-            height: 60%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 2;
-            cursor: pointer;
-        }
-
 
     </style>
 </head>
 <body>
-<div id="frame">
-    <div id="game">
-        <h1>MemoryGame!</h1>
-        <h2>Show your Skills!</h2>
+<div class="container">
+    <header>
+        <h1>Memory Game</h1>
+    </header>
+    <div id="frame">
+        <div id="info">
+            <h2>Show your Skills!</h2>
+            <section class="score-panel">
+                <ul class="stars">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                </ul>
 
-        <button onclick="showOn()">Highscore</button>
-        <button onclick="showOn()">Neues Spiel</button>
+                <span class="moves">0</span> Move(s)
 
-    </div>
-    <div id="overlayWithBtnAct">
-        <div id="overlayNewGame">
-            <h2>Schwierigkeitsgrad wählen:</h2>
-            <button onclick="">Leicht</button>
-            <button onclick="">Mittel</button>
-            <button onclick="">Schwer</button>
-            <button onclick="showOff()">zurück zum Spiel</button>
-        </div>
-        <div id="overlayHigh">
-            <table>
-                <td>
-                    <tr>userone</tr>
-                    <tr>usertwo</tr>
-                </td>
+                <div class="timer">
+                </div>
+
+                <div class="restart" onclick=startGame()>
+                    <i class="fa fa-repeat">
+                        <button onclick="showOn()">Neues Spiel</button>
+                    </i>
+                </div>
+            </section>
+
+            <table class="table table-bordered table-dark" id='board'>
+
+                <tr>
+                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="sendRequestGET()"></td>
+                </tr>
+                <tr>
+                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="sendRequestGET()"></td>
+                </tr>
+                <tr>
+                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="sendRequestGET()"></td>
+                    <td onclick="sendRequestGET()"></td>
+                </tr>
+
             </table>
-            <button onclick="showOff()">zurück zum Spiel</button>
+
+
+            <button onclick="showOn()">Highscore</button>
+
+
         </div>
-    </div>
-    <div id="overlayWin">
-        <h2 id="winner">Herzlichen Glückwunsch!</h2>
-        <button id="restart">Nochmal Spielen?</button>
+        <div id="overlayWithBtnAct">
+            <div id="overlayNewGame">
+                <h2>Schwierigkeitsgrad wählen:</h2>
+                <button onclick="">Leicht</button>
+                <button onclick="">Mittel</button>
+                <button onclick="">Schwer</button>
+                <button onclick="showOff()">zurück zum Spiel</button>
+            </div>
+            <div id="overlayHigh">
+                <table>
+                    <tr>
+                        <thead>
+                        <th><h1>Highscore Rangliste</h1></th>
+                        </thead>
+                    </tr>
+                    <tr>
+                        <thead>
+                        <th><h2>Name</h2></th>
+                        <th><h2>Anzahl der benötigten Züge</h2></th>
+                        <th><h2>Zeit (mm:ss)</h2></th>
+                        </thead>
+                    </tr>
+                    <tr>
+                        <td>User One</td>
+                        <td>10</td>
+                        <td>1:00</td>
+                    </tr>
+                    <tr>
+                        <td>User Two</td>
+                        <td>12</td>
+                        <td>2:00</td>
+                    </tr>
+                    <tr>
+                        <td>User Two</td>
+                        <td>15</td>
+                        <td>3:00</td>
+                    </tr>
+                </table>
+                <button onclick="showOff()">zurück zum Spiel</button>
+            </div>
+        </div>
+        <div id="popupWin" class="overlay">
+            <div class="popup">
+                <h2>Glückwunsch 🎉</h2>
+                <a class="close" href=#>×</a>
+                <div class="content-1">
+                    Herzlichen Glückwunsch! Du hast Gewonnen!
+                </div>
+                <div class="content-2">
+                    <p>Du hast <span id=finalMove> </span> Spielzüge benötigt </p>
+                    <p>Deine Zeit: <span id=totalTime> </span></p>
+                    <p>Bewertung: <span id=starRating></span></p>
+                </div>
+                <button id="play-again" onclick=sendRequestGET('newGame')>
+                    erneut spielen 😄</a>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
+
 <script>
+
+    var http = new XMLHttpRequest();
+
+    function sendRequestGET(path, query) {
+        http.open('GET', path + '?' + query);
+        http.send();
+    }
+
     function showOn() {
         document.getElementById("overlayWithBtnAct").style.display = "block";
     }
