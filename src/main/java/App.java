@@ -12,7 +12,7 @@ public class App {
 
         app.get("/card", ctx -> {
             // number.put((ctx.queryParam("val").charAt(0)));
-            game.openCard(ctx.queryParam("val").charAt(0));
+            game.openCard(ctx.queryParam("idx").charAt(0));
             ctx.result("bla");
         });
     }
